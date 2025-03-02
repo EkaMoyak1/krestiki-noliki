@@ -29,12 +29,6 @@ def on_click(row, col):
 
     if check_winner():
         messagebox.showinfo("Поздравляем!", f"Игрок {current_player} победил!")
-        # root.destroy()
-
-    if is_draw():
-        messagebox.showinfo("Ничья!", "Игра окончена, ничья!")
-        # root.destroy()
-
         if current_player == "X":
             score_X += 1
         else:
@@ -43,8 +37,12 @@ def on_click(row, col):
         clear_btn()  # Очистка поля после победы
         return
 
-    current_player = "O" if current_player == "X" else "X"
+    if is_draw():
+        messagebox.showinfo("Ничья!", "Игра окончена, ничья!")
+        clear_btn()  # Очистка поля после ничьи
+        return
 
+    current_player = "O" if current_player == "X" else "X"
 
 # Функция для проверки ничьей
 def is_draw():
@@ -53,7 +51,6 @@ def is_draw():
             if button["text"] == "":
                 return False
     return True
-
 
 # Создание игрового поля
 buttons = []
@@ -81,12 +78,12 @@ def check_winner():
         return True
     return False
 
-
 # Функция для очистки поля
 def clear_btn():
     for i in range(3):
         for j in range(3):
             buttons[i][j]['text'] = ""
+
 
 
 # Создание метки для отображения счета
