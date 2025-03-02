@@ -5,10 +5,22 @@ root = tk.Tk()
 root.title("Крестики-нолики")
 root.geometry("350x400+500+200")
 root["bg"] = '#219EBC'
+
+# Счетчики побед
+score_X = 0
+score_O = 0
+
+# Создание фрейма для игрового поля
 frame = tk.Frame(root)
-frame.pack(padx=10, pady=40)
+frame.pack(padx=10, pady=10)
+
+# Функция для обновления счета на экране
+def update_score():
+    score_label.config(text=f"X: {score_X}  |  O: {score_O}")
+
+# Функция для обработки нажатия на кнопку
 def on_click(row, col):
-    global current_player
+    global current_player, score_X, score_O
 
     if buttons[row][col]['text'] != "":
         return
@@ -22,10 +34,19 @@ def on_click(row, col):
     if is_draw():
         messagebox.showinfo("Ничья!", "Игра окончена, ничья!")
         # root.destroy()
+
+        if current_player == "X":
+            score_X += 1
+        else:
+            score_O += 1
+        update_score()
+        clear_btn()  # Очистка поля после победы
         return
 
     current_player = "O" if current_player == "X" else "X"
 
+
+# Функция для проверки ничьей
 def is_draw():
     for row in buttons:
         for button in row:
@@ -33,6 +54,8 @@ def is_draw():
                 return False
     return True
 
+
+# Создание игрового поля
 buttons = []
 for i in range(3):
     row = []
@@ -44,6 +67,7 @@ for i in range(3):
 
 current_player = "X"
 
+# Функция для проверки победителя
 def check_winner():
     for i in range(3):
         if buttons[i][0]["text"] == buttons[i][1]["text"] == buttons[i][2]["text"] != "":
@@ -57,11 +81,19 @@ def check_winner():
         return True
     return False
 
+
+# Функция для очистки поля
 def clear_btn():
     for i in range(3):
         for j in range(3):
             buttons[i][j]['text'] = ""
 
+
+# Создание метки для отображения счета
+score_label = tk.Label(root, text=f"X: {score_X}  |  O: {score_O}", font=("Arial", 16), bg='#219EBC', fg='white')
+score_label.pack(pady=10)
+
+# Кнопка для сброса игры
 btn_sbros = tk.Button(root, text="Начать заново", font=("Arial", 12),
                       bg='#023047', fg='white',
                       width=15, height=2, command=clear_btn)
