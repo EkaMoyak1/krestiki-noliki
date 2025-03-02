@@ -21,7 +21,7 @@ def on_click(row, col):
 
     if is_draw():
         messagebox.showinfo("Ничья!", "Игра окончена, ничья!")
-        root.destroy()
+        # root.destroy()
         return
 
     current_player = "O" if current_player == "X" else "X"
