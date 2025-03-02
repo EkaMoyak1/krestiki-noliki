@@ -19,9 +19,19 @@ def on_click(row, col):
         messagebox.showinfo("Поздравляем!", f"Игрок {current_player} победил!")
         root.destroy()
 
+    if is_draw():
+        messagebox.showinfo("Ничья!", "Игра окончена, ничья!")
+        root.destroy()
+        return
+
     current_player = "O" if current_player == "X" else "X"
 
-
+def is_draw():
+    for row in buttons:
+        for button in row:
+            if button["text"] == "":
+                return False
+    return True
 
 buttons = []
 for i in range(3):
