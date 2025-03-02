@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 root = tk.Tk()
 root.title("Крестики-нолики")
-root.geometry("350x350+500+200")
+root.geometry("350x400+500+200")
 root["bg"] = '#219EBC'
 frame = tk.Frame(root)
 frame.pack(padx=10, pady=40)
@@ -17,7 +17,7 @@ def on_click(row, col):
 
     if check_winner():
         messagebox.showinfo("Поздравляем!", f"Игрок {current_player} победил!")
-        root.destroy()
+        # root.destroy()
 
     current_player = "O" if current_player == "X" else "X"
 
@@ -47,6 +47,14 @@ def check_winner():
         return True
     return False
 
+def clear_btn():
+    for i in range(3):
+        for j in range(3):
+            buttons[i][j]['text'] = ""
 
+btn_sbros = tk.Button(root, text="Начать заново", font=("Arial", 12),
+                      bg='#023047', fg='white',
+                      width=15, height=2, command=clear_btn)
+btn_sbros.pack(side="bottom", pady=10)
 
 root.mainloop()
